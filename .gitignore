@@ -4,6 +4,9 @@
 # Production
 /build
 
+/default-docs
+/blog
+
 # Generated files
 .docusaurus
 .cache-loader
