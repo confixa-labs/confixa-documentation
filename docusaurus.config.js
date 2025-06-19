@@ -12,7 +12,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'Confixa',
   tagline: 'DevSecOps, Simplified – AI-Powered, No-Code Cloud-Native!',
-  favicon: 'img/logo.png',
+  favicon: 'https://storage.googleapis.com/confixa-files/logo.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -85,7 +85,8 @@ const config = {
         title: 'Confixa',
         logo: {
           alt: 'Confixa Logo',
-          src: 'img/logo.png',
+          src: 'https://storage.googleapis.com/confixa-files/logo.png',
+          href: 'https://www.confixa.com'
         },
         items: [
           {
