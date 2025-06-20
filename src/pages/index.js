@@ -6,7 +6,7 @@ export default function Home() {
   const history = useHistory();
 
   useEffect(() => {
-    history.push('/docs/introduction/overview'); // 👈 change this to your target route
+    history.push('/introduction/overview'); // 👈 change this to your target route
   }, [history]);
 
   return (

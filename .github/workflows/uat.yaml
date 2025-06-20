@@ -1,0 +1,46 @@
+on:
+  push:
+    branches:
+    - 'uat'
+
+permissions:
+    id-token: write
+    contents: read
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:        
+    - name: Code Checkout
+      uses: actions/checkout@v4
+      
+    - name: Authenticate with Google Cloud
+      id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Build the Docker Image
+      env:
+        GOOGLE_PROJECT: confixa-rnd
+      run: |
+        gcloud auth configure-docker asia-south1-docker.pkg.dev
+        docker build -t asia-south1-docker.pkg.dev/confixa-rnd/confixa-docker-images/dev-confixa-documentation:${{ github.sha }} .
+
+    - name: Push Docker Image to Artifact Registry
+      run: |
+        docker push asia-south1-docker.pkg.dev/confixa-rnd/confixa-docker-images/dev-confixa-documentation:${{ github.sha }}
+        
+        git clone https://${{ secrets.USER }}:${{ secrets.TOKEN }}@github.com/confixa-labs/confixa-gitops --branch confixa-gitops
+        cd confixa-gitops
+        git config user.name ${{ secrets.USER }}
+        git config user.email ${{ secrets.EMAIL }}
+        
+        yq e '.spec.template.spec.containers[0].image = "asia-south1-docker.pkg.dev/confixa-rnd/confixa-docker-images/dev-confixa-documentation:${{ github.sha }}"' -i deployment.apps/deploy-confixa-documentation.yaml
+        
+        git add .
+        git commit -m "updating newer image"  
+        git push --set-upstream origin confixa-gitops
