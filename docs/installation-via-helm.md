@@ -50,10 +50,10 @@ After installing Confixa via Helm, you can port-forward the frontend and API ser
 
 ```bash
 # Frontend UI
-kubectl port-forward svc/confixa-frontend 5000:80 -n confixa-namespace
+kubectl port-forward svc/confixa-frontend 5000:80 -n confixa
 
 # Backend API
-kubectl port-forward svc/confixa-api 5001:80 -n confixa-namespace
+kubectl port-forward svc/confixa-api 5001:80 -n confixa
 ```
 
 **Access in browser**:
