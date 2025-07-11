@@ -5,32 +5,41 @@ sidebar_position: 3
 # Installation via Helm
 
 ## Add Confixa Repo
+
 ---
-``` bash
+
+```bash
 helm repo add confixa https://confixa-labs.github.io/confixa/charts
 helm repo update
 ```
 
 ## Installation Steps
+
 ---
-``` bash
-helm install confixa confixa/Confixa --version 0.9.1
+
+```bash
+helm install confixa confixa/Confixa --namespace confixa --create-namespace --version 1.0.0
 ```
 
 ## Upgrade Instructions
+
 ---
-``` bash
+
+```bash
 helm repo update
-helm upgrade confixa confixa/Confixa --version 0.9.1
+helm upgrade confixa confixa/Confixa -n confixa --version 1.0.0
 ```
 
 ## Uninstallation
+
 ---
-``` bash
+
+```bash
 helm uninstall confixa -n confixa
 ```
 
 ## Port Forwarding for Browser Access
+
 ---
 
 ### Initial Access (Post Installation)
@@ -39,12 +48,12 @@ After installing Confixa via Helm, you can port-forward the frontend and API ser
 
 **Namespace**: Replace `confixa-namespace` with the namespace you used during installation.
 
-``` bash
+```bash
 # Frontend UI
-kubectl port-forward svc/confixa-frontend 5000:5000 -n confixa-namespace
+kubectl port-forward svc/confixa-frontend 5000:80 -n confixa-namespace
 
 # Backend API
-kubectl port-forward svc/confixa-api 5001:5001 -n confixa-namespace
+kubectl port-forward svc/confixa-api 5001:80 -n confixa-namespace
 ```
 
 **Access in browser**:
@@ -95,7 +104,9 @@ kubectl port-forward svc/kubernetes-dashboard 9091:443 -n <dashboard-namespace>
 ---
 
 ### Notes
+
 ---
+
 You can also navigate via your Kubernetes dashboard (e.g., Lens or K9s):
 
 - Open the **Services** section.
